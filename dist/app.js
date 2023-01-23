@@ -8,16 +8,19 @@ class Todo {
 }
 class UI {
     addTodoToList(todo) {
-        // console.log(todo, 'addTodoToList')
         const list = document.getElementById("todo-list");
         const tr = document.createElement("tr");
         tr.innerHTML = `
                         <th>${todo.id}</th>
                         <td>${todo.title}</td>
                         <td><input type="checkbox" ${todo.status ? "checked" : ""} class="form-check-input"></td>
-                        <td><button class="btn btn-sm btn-outline-danger">delete</button></td>
+                        <td><button class="btn btn-sm btn-outline-danger" onclick="ui.removeTodo(event)">delete</button></td>
                         `;
         list.appendChild(tr);
+    }
+    removeTodo(e) {
+        const element = e.target;
+        element.parentElement.parentElement.remove();
     }
 }
 const form = document.getElementById("todo-form");
@@ -38,5 +41,6 @@ form.addEventListener("submit", (e) => {
         };
         const todo = new Todo(todoObj);
         ui.addTodoToList(todo);
+        title.value = '';
     }
 });

@@ -18,7 +18,7 @@ class Todo implements TodoInterface {
 
 class UI {
     addTodoToList(todo: TodoInterface) {
-        // console.log(todo, 'addTodoToList')
+       
         const list = document.getElementById("todo-list")!;
 
         const tr = document.createElement("tr");
@@ -26,16 +26,24 @@ class UI {
                         <th>${todo.id}</th>
                         <td>${todo.title}</td>
                         <td><input type="checkbox" ${ todo.status ? "checked" : "" } class="form-check-input"></td>
-                        <td><button class="btn btn-sm btn-outline-danger">delete</button></td>
+                        <td><button class="btn btn-sm btn-outline-danger" onclick="ui.removeTodo(event)">delete</button></td>
                         `;
 
         list.appendChild(tr);
+    }
+
+    removeTodo(e: Event){
+        const element = e.target as HTMLElement;
+
+        element.parentElement!.parentElement!.remove()
     }
 }
 
 const form = document.getElementById("todo-form") as HTMLFormElement;
 const title = document.getElementById("title") as HTMLInputElement;
-const titleError = document.getElementById("title-error") as HTMLParagraphElement;
+const titleError = document.getElementById(
+    "title-error"
+) as HTMLParagraphElement;
 
 const ui = new UI();
 
@@ -55,5 +63,7 @@ form.addEventListener("submit", (e: Event) => {
         const todo = new Todo(todoObj);
 
         ui.addTodoToList(todo);
+
+        title.value = ''
     }
 });
